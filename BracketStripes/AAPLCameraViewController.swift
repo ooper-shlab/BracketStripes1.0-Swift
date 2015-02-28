@@ -70,7 +70,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     
     
     private func cameraDeviceForPosition(position: AVCaptureDevicePosition) -> AVCaptureDevice? {
-        for device in AVCaptureDevice.devices() as [AVCaptureDevice] {
+        for device in AVCaptureDevice.devices() as! [AVCaptureDevice] {
             if device.position == position {
                 return device
             }
@@ -149,7 +149,9 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         captureSession!.startRunning()
         
         // We make sure not to exceed the maximum number of supported brackets
-        maxBracketCount = stillImageOutput!.maxBracketedCaptureStillImageCount
+        println(NSStringFromClass(stillImageOutput!.dynamicType))
+        println(stillImageOutput!.respondsToSelector("maxBracketedCaptureStillImageCount"))
+        maxBracketCount = stillImageOutput!.maxBracketedCaptureStillImageCount//.maxBracketedCaptureStillImageCount
         
         // Construct capture bracket settings and warmup
         self.prepareBracketsWithCompletionHandler(completion)
@@ -178,7 +180,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         NSLog("Warming brackets: %@", bracketSettings!)
         let connection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
         stillImageOutput?.prepareToCaptureStillImageBracketFromConnection(connection,
-            withSettingsArray: bracketSettings) {
+            withSettingsArray: bracketSettings as! [AnyObject]) {
                 prepared, error in
                 
                 completion(prepared, error)
@@ -259,7 +261,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         
         NSLog("Performing bracketed capture: %@", bracketSettings!)
         let connection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
-        stillImageOutput!.captureStillImageBracketAsynchronouslyFromConnection(connection, withSettingsArray: bracketSettings!) {
+        stillImageOutput!.captureStillImageBracketAsynchronouslyFromConnection(connection, withSettingsArray: bracketSettings! as [AnyObject]) {
             sampleBuffer, stillImageSettings, error in
             --todo
             

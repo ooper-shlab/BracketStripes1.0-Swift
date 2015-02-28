@@ -66,8 +66,8 @@
 		6F72DAA31907102300047A88 = {
 			isa = PBXGroup;
 			children = (
-				D7AE53711A85F77E0085AA3B /* LICENSE.txt */,
 				D71F144419E7D5AE0042844A /* readme.txt */,
+				D7AE53711A85F77E0085AA3B /* LICENSE.txt */,
 				6FAD1D2C19369FBE0082987A /* README.md */,
 				6F72DAAE1907102300047A88 /* BracketStripes */,
 				6F72DAAD1907102300047A88 /* Products */,
@@ -361,7 +361,7 @@
 				GCC_PREFIX_HEADER = "BracketStripes/BracketStripes-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "BracketStripes/BracketStripes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = BracketStripes;
 				SDKROOT = iphoneos;
@@ -385,7 +385,7 @@
 				GCC_PREFIX_HEADER = "BracketStripes/BracketStripes-Prefix.pch";
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "BracketStripes/BracketStripes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = BracketStripes;
 				SDKROOT = iphoneos;

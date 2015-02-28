@@ -58,8 +58,8 @@ class CapturePreviewView : UIView {
         if object === self.captureOutput &&
             keyPath == kCapturingStillImageKeypath {
                 
-                let value = change[NSKeyValueChangeNewKey]! as NSNumber
-                self.animateVisualShutter(value.boolValue)
+                let value = change[NSKeyValueChangeNewKey]! as! Bool
+                self.animateVisualShutter(value)
                 return
         }
         

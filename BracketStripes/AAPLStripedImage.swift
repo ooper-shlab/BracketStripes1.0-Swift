@@ -49,7 +49,7 @@ class StripedImage : NSObject {
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        renderContext = CGBitmapContextCreate(nil, UInt(size.width), UInt(size.height), bitsPerComponent, bytesPerRow, colorSpace, CGBitmapInfo(CGImageAlphaInfo.PremultipliedFirst.rawValue))
+        renderContext = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, CGBitmapInfo(CGImageAlphaInfo.PremultipliedFirst.rawValue))
         
     }
     
@@ -174,7 +174,7 @@ class StripedImage : NSObject {
         // Perform the render
         CGContextSaveGState(renderContext)
         
-        CGContextClipToRects(renderContext, maskRects, UInt(maskCount))
+        CGContextClipToRects(renderContext, maskRects, maskCount)
         CGContextDrawImage(renderContext, imageRect, image)
         
         CGContextRestoreGState(renderContext)
