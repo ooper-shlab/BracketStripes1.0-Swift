@@ -46,9 +46,6 @@ class ZoomImageView: UIView, UIScrollViewDelegate {
         imageView = UIImageView(frame: CGRectZero)
         scrollView!.addSubview(imageView!)
     }
-    override init() {
-        super.init()
-    }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

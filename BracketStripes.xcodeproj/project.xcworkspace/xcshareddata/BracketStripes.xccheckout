@@ -10,31 +10,31 @@
 	<string>BracketStripes</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>78E153D4-4E60-4539-B582-9C475CD3D005</key>
-		<string>ssh://gitlab.sd.apple.com/samplecode/bracketstripes-1-0.git</string>
+		<key>0A2BFDA21B5E59D1599167D7BAF0A2504997BE70</key>
+		<string>https://github.com/ooper-shlab/BracketStripes1.0-Swift.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>BracketStripes.xcodeproj/project.xcworkspace</string>
+	<string>BracketStripes.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>78E153D4-4E60-4539-B582-9C475CD3D005</key>
+		<key>0A2BFDA21B5E59D1599167D7BAF0A2504997BE70</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://gitlab.sd.apple.com/samplecode/bracketstripes-1-0.git</string>
+	<string>https://github.com/ooper-shlab/BracketStripes1.0-Swift.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>78E153D4-4E60-4539-B582-9C475CD3D005</string>
+	<string>0A2BFDA21B5E59D1599167D7BAF0A2504997BE70</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>78E153D4-4E60-4539-B582-9C475CD3D005</string>
+			<string>0A2BFDA21B5E59D1599167D7BAF0A2504997BE70</string>
 			<key>IDESourceControlWCCName</key>
-			<string>bracketstripes-1-0</string>
+			<string>BracketStripesUsingtheBracketedCaptureAPI-Swift</string>
 		</dict>
 	</array>
 </dict>
