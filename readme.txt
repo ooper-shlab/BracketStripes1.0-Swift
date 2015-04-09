@@ -2,8 +2,6 @@ BracketStripes
 
 Translated by OOPer in cooperation with shlab.jp, on 2015/2/7.
 
-Adapted to Swift 1.2 beta3 on 2015/3/14.
-
 Based on
 https://developer.apple.com/library/ios/samplecode/BracketStripes/Introduction/Intro.html#//apple_ref/doc/uid/TP40014579
 2014-09-17.
@@ -15,4 +13,4 @@ You should not contact to Apple or SHLab(jp) about any faults caused by my trans
 ===========================================================================
 BUILD REQUIREMENTS:
 
-Xcode 6.3 beta3, iOS SDK 8.3
+Xcode 6.3, iOS SDK 8.3
