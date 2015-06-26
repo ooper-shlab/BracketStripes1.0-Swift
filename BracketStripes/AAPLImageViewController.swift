@@ -53,7 +53,7 @@ class ImageViewController: UIViewController {
 
         imageView = ZoomImageView()
         imageView!.image = image
-        imageView!.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+        imageView!.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
 
         self.automaticallyAdjustsScrollViewInsets = false
         self.view = imageView!

@@ -40,7 +40,7 @@ class CapturePreviewView : UIView {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         previewLayer!.videoGravity = AVLayerVideoGravityResizeAspect
         previewLayer!.frame = self.bounds
-        self.layer.addSublayer(previewLayer)
+        self.layer.addSublayer(previewLayer!)
         
         // Visually animate still image capture
         self.captureOutput = captureOutput
@@ -52,13 +52,12 @@ class CapturePreviewView : UIView {
         self.captureOutput!.removeObserver(self, forKeyPath: kCapturingStillImageKeypath)
     }
     
-    
-    override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [NSObject : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         // Still image capture state
         if object === self.captureOutput &&
             keyPath == kCapturingStillImageKeypath {
                 
-                let value = change[NSKeyValueChangeNewKey]! as! Bool
+                let value = change![NSKeyValueChangeNewKey]! as! Bool
                 self.animateVisualShutter(value)
                 return
         }

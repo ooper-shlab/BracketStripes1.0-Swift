@@ -49,7 +49,7 @@ class StripedImage : NSObject {
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        renderContext = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, CGBitmapInfo(CGImageAlphaInfo.PremultipliedFirst.rawValue))
+        renderContext = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, CGImageAlphaInfo.PremultipliedFirst.rawValue)
         
     }
     
@@ -57,8 +57,8 @@ class StripedImage : NSObject {
     private func createImageFromSampleBuffer(sampleBuffer: CMSampleBufferRef) -> CGImageRef? {
         var image: CGImageRef? = nil
         
-        var formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)
-        let subType = CMFormatDescriptionGetMediaSubType(formatDescription)
+        let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)
+        let subType = CMFormatDescriptionGetMediaSubType(formatDescription!)
         
         let blockBuffer = CMSampleBufferGetDataBuffer(sampleBuffer)
         
@@ -72,7 +72,7 @@ class StripedImage : NSObject {
             var jpegBytes: UnsafeMutablePointer<Int8> = nil
             
             
-            if CMBlockBufferGetDataPointer(blockBuffer, 0, &lengthAtOffset, &length, &jpegBytes) == OSStatus(kCMBlockBufferNoErr) &&
+            if CMBlockBufferGetDataPointer(blockBuffer!, 0, &lengthAtOffset, &length, &jpegBytes) == OSStatus(kCMBlockBufferNoErr) &&
                 lengthAtOffset == length {
                     
                     let jpegData = NSData(bytes: UnsafePointer<Int8>(jpegBytes), length: Int(length))
@@ -82,7 +82,7 @@ class StripedImage : NSObject {
                         kCGImageSourceShouldAllowFloat as NSString : false,
                         kCGImageSourceShouldCache as NSString : false,
                     ]
-                    image = CGImageSourceCreateImageAtIndex(imageSource, 0, decodeOptions)
+                    image = CGImageSourceCreateImageAtIndex(imageSource!, 0, decodeOptions)
                     
             }
         } else {
@@ -94,19 +94,19 @@ class StripedImage : NSObject {
             
             let colorSpace = CGColorSpaceCreateDeviceRGB()
             
-            CVPixelBufferLockBaseAddress(imageBuffer, 0)
+            CVPixelBufferLockBaseAddress(imageBuffer!, 0)
             
-            let baseAddress = CVPixelBufferGetBaseAddressOfPlane(imageBuffer, 0)
+            let baseAddress = CVPixelBufferGetBaseAddressOfPlane(imageBuffer!, 0)
             
-            let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer)
+            let bytesPerRow = CVPixelBufferGetBytesPerRow(imageBuffer!)
             let bitsPerComponent: size_t = 8
-            let width = CVPixelBufferGetWidth(imageBuffer)
-            let height = CVPixelBufferGetHeight(imageBuffer)
+            let width = CVPixelBufferGetWidth(imageBuffer!)
+            let height = CVPixelBufferGetHeight(imageBuffer!)
             
-            let bitmapContext = CGBitmapContextCreate(baseAddress, width, height, bitsPerComponent, bytesPerRow, colorSpace, (CGBitmapInfo.ByteOrder32Little | CGBitmapInfo(CGImageAlphaInfo.NoneSkipFirst.rawValue)))
+            let bitmapContext = CGBitmapContextCreate(baseAddress, width, height, bitsPerComponent, bytesPerRow, colorSpace, CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.NoneSkipFirst.rawValue)
             image = CGBitmapContextCreateImage(bitmapContext)
             
-            CVPixelBufferUnlockBaseAddress(imageBuffer, 0)
+            CVPixelBufferUnlockBaseAddress(imageBuffer!, 0)
             
         }
         
@@ -135,7 +135,7 @@ class StripedImage : NSObject {
         let scale = UIScreen.mainScreen().scale
         
         let cgImage = CGBitmapContextCreateImage(renderContext)
-        let image = UIImage(CGImage: cgImage, scale: scale, orientation: orientation)
+        let image = UIImage(CGImage: cgImage!, scale: scale, orientation: orientation)
         
         return image
     }

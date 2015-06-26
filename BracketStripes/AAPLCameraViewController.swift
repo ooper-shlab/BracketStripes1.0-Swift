@@ -106,7 +106,13 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         }
         
         var error: NSError? = nil
-        let deviceInput = AVCaptureDeviceInput(device: captureDevice, error: &error)
+        let deviceInput: AVCaptureDeviceInput!
+        do {
+            deviceInput = try AVCaptureDeviceInput(device: captureDevice)
+        } catch let error1 as NSError {
+            error = error1
+            deviceInput = nil
+        }
         if error != nil {
             NSLog("This error should be handled appropriately in your app -- obtain device input: %@", error!)
             let message = NSLocalizedString("message-back-camera-open-failed", comment: "Error message back camera - can't open.")
@@ -149,8 +155,8 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         captureSession!.startRunning()
         
         // We make sure not to exceed the maximum number of supported brackets
-        println(NSStringFromClass(stillImageOutput!.dynamicType))
-        println(stillImageOutput!.respondsToSelector("maxBracketedCaptureStillImageCount"))
+        print(NSStringFromClass(stillImageOutput!.dynamicType))
+        print(stillImageOutput!.respondsToSelector("maxBracketedCaptureStillImageCount"))
         maxBracketCount = stillImageOutput!.maxBracketedCaptureStillImageCount//.maxBracketedCaptureStillImageCount
         
         // Construct capture bracket settings and warmup
@@ -232,14 +238,14 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             // Clamp fixed settings to the device limits
             let ISO = CLAMP(
                 ISOValues[index],
-                captureDeviceFormat!.minISO,
-                captureDeviceFormat!.maxISO
+                lo: captureDeviceFormat!.minISO,
+                hi: captureDeviceFormat!.maxISO
             )
             
             let durationSeconds = CLAMP(
                 durationSecondsValues[index],
-                CMTimeGetSeconds(captureDeviceFormat!.minExposureDuration),
-                CMTimeGetSeconds(captureDeviceFormat!.maxExposureDuration)
+                lo: CMTimeGetSeconds(captureDeviceFormat!.minExposureDuration),
+                hi: CMTimeGetSeconds(captureDeviceFormat!.maxExposureDuration)
             )
             let duration = CMTimeMakeWithSeconds(durationSeconds, 1000)
             
