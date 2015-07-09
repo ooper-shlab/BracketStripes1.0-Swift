@@ -30,7 +30,7 @@ typealias CompletionWithImage = (UIImage?)->Void
 @objc(AAPLCameraViewController)
 class CameraViewController: UIViewController, ImageViewDelegate {
     
-    required init(coder aDecoder: NSCoder) {
+    required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     

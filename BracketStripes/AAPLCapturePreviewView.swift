@@ -52,7 +52,7 @@ class CapturePreviewView : UIView {
         self.captureOutput!.removeObserver(self, forKeyPath: kCapturingStillImageKeypath)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [NSObject : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         // Still image capture state
         if object === self.captureOutput &&
             keyPath == kCapturingStillImageKeypath {
