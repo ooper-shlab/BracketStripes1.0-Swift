@@ -20,25 +20,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		6F4AAB7C19098DA10040C8B5 /* AAPLCameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLCameraViewController.h; sourceTree = "<group>"; };
-		6F4AAB7F1909B67B0040C8B5 /* AAPLStripedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLStripedImage.h; sourceTree = "<group>"; };
-		6F4AAB801909B67B0040C8B5 /* AAPLStripedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLStripedImage.m; sourceTree = "<group>"; };
 		6F72DAAC1907102300047A88 /* BracketStripes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BracketStripes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F72DAB01907102300047A88 /* BracketStripes-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BracketStripes-Info.plist"; sourceTree = "<group>"; };
 		6F72DAB21907102300047A88 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		6F72DAB41907102300047A88 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6F72DAB71907102300047A88 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		6F72DAB81907102300047A88 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		6F72DABC1907102300047A88 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		6F7D3F621933FF34006DF71D /* AAPLCameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLCameraViewController.m; sourceTree = "<group>"; };
 		6FAD1D2C19369FBE0082987A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
-		6FD74822190AD93A002C745F /* AAPLCapturePreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLCapturePreviewView.h; sourceTree = "<group>"; };
-		6FD74823190AD93A002C745F /* AAPLCapturePreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLCapturePreviewView.m; sourceTree = "<group>"; };
-		6FE46E44191BFF8C004BCB45 /* AAPLImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLImageViewController.h; sourceTree = "<group>"; };
-		6FE46E45191BFF8C004BCB45 /* AAPLImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLImageViewController.m; sourceTree = "<group>"; };
-		6FE46E4A191C020C004BCB45 /* AAPLZoomImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAPLZoomImageView.h; sourceTree = "<group>"; };
-		6FE46E4B191C020C004BCB45 /* AAPLZoomImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAPLZoomImageView.m; sourceTree = "<group>"; };
-		6FE46E4E191C2B1F004BCB45 /* AAPLMacros.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AAPLMacros.h; sourceTree = "<group>"; };
 		6FE46E53191C4EE3004BCB45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6FE46E58191C4F7A004BCB45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		D71DD16B19E1A57900B86A7E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -85,7 +71,6 @@
 		6F72DAAE1907102300047A88 /* BracketStripes */ = {
 			isa = PBXGroup;
 			children = (
-				D75A4E2F19E795F400E0838C /* Unused */,
 				D71DD16B19E1A57900B86A7E /* AppDelegate.swift */,
 				6FD74821190AD92A002C745F /* Camera */,
 				6F9BE8C7190AE10400281BAF /* Utilities */,
@@ -147,27 +132,6 @@
 				6F72DAB11907102300047A88 /* Localizable.strings */,
 			);
 			name = en.lproj;
-			sourceTree = "<group>";
-		};
-		D75A4E2F19E795F400E0838C /* Unused */ = {
-			isa = PBXGroup;
-			children = (
-				6F72DAB71907102300047A88 /* AppDelegate.h */,
-				6F72DAB81907102300047A88 /* AppDelegate.m */,
-				6FD74822190AD93A002C745F /* AAPLCapturePreviewView.h */,
-				6FD74823190AD93A002C745F /* AAPLCapturePreviewView.m */,
-				6FE46E4A191C020C004BCB45 /* AAPLZoomImageView.h */,
-				6FE46E4B191C020C004BCB45 /* AAPLZoomImageView.m */,
-				6F4AAB7C19098DA10040C8B5 /* AAPLCameraViewController.h */,
-				6F7D3F621933FF34006DF71D /* AAPLCameraViewController.m */,
-				6FE46E44191BFF8C004BCB45 /* AAPLImageViewController.h */,
-				6FE46E45191BFF8C004BCB45 /* AAPLImageViewController.m */,
-				6F4AAB7F1909B67B0040C8B5 /* AAPLStripedImage.h */,
-				6F4AAB801909B67B0040C8B5 /* AAPLStripedImage.m */,
-				6FE46E4E191C2B1F004BCB45 /* AAPLMacros.h */,
-				6F72DAB41907102300047A88 /* main.m */,
-			);
-			name = Unused;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

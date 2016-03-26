@@ -155,9 +155,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         captureSession!.startRunning()
         
         // We make sure not to exceed the maximum number of supported brackets
-        print(NSStringFromClass(stillImageOutput!.dynamicType))
-        print(stillImageOutput!.respondsToSelector("maxBracketedCaptureStillImageCount"))
-        maxBracketCount = stillImageOutput!.maxBracketedCaptureStillImageCount//.maxBracketedCaptureStillImageCount
+        maxBracketCount = stillImageOutput!.maxBracketedCaptureStillImageCount
         
         // Construct capture bracket settings and warmup
         self.prepareBracketsWithCompletionHandler(completion)
@@ -269,7 +267,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         let connection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
         stillImageOutput!.captureStillImageBracketAsynchronouslyFromConnection(connection, withSettingsArray: bracketSettings! as [AnyObject]) {
             sampleBuffer, stillImageSettings, error in
-            --todo
+            todo -= 1
             
             if error == nil {
                 NSLog("Bracket %@", stillImageSettings)
@@ -280,7 +278,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             } else {
                 NSLog("This error should be handled appropriately in your app -- Bracket %@ ERROR: %@", stillImageSettings, error!)
                 
-                ++failed
+                failed += 1
             }
             
             // Return the rendered image strip when the capture completes

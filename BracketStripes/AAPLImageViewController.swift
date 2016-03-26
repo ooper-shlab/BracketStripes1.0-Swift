@@ -61,7 +61,7 @@ class ImageViewController: UIViewController {
         let iosBlueColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = iosBlueColor
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: "_done:")
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(ImageViewController._done(_:)))
     }
 
     
