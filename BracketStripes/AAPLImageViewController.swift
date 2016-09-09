@@ -21,7 +21,7 @@ import UIKit
 @objc(AAPLImageViewDelegate)
 protocol ImageViewDelegate {
 
-    func imageViewControllerDidFinish(controller: ImageViewController)
+    func imageViewControllerDidFinish(_ controller: ImageViewController)
 
 }
 
@@ -53,7 +53,7 @@ class ImageViewController: UIViewController {
 
         imageView = ZoomImageView()
         imageView!.image = image
-        imageView!.autoresizingMask = [UIViewAutoresizing.FlexibleWidth, UIViewAutoresizing.FlexibleHeight]
+        imageView!.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         self.automaticallyAdjustsScrollViewInsets = false
         self.view = imageView!
@@ -61,11 +61,11 @@ class ImageViewController: UIViewController {
         let iosBlueColor = UIColor(red: 0.0, green: 122.0/255.0, blue: 1.0, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = iosBlueColor
 
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done, target: self, action: #selector(ImageViewController._done(_:)))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(ImageViewController._done(_:)))
     }
 
     
-    func _done(sender: AnyObject) {
+    func _done(_ sender: AnyObject) {
         delegate?.imageViewControllerDidFinish(self)
     }
 

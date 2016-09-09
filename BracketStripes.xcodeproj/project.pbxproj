@@ -10,6 +10,7 @@
 		6F72DAB31907102300047A88 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6F72DAB11907102300047A88 /* Localizable.strings */; };
 		6F72DABD1907102300047A88 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6F72DABC1907102300047A88 /* Images.xcassets */; };
 		6FE46E52191C4EDB004BCB45 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6FE46E50191C4EDB004BCB45 /* Main.storyboard */; };
+		D70A89761D830B9E00405E73 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D70A89741D830B9E00405E73 /* Launch Screen.storyboard */; };
 		D71DD16C19E1A57900B86A7E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DD16B19E1A57900B86A7E /* AppDelegate.swift */; };
 		D71DD17019E1AD9100B86A7E /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DD16F19E1AD9100B86A7E /* Functions.swift */; };
 		D71DD17219E2A6C500B86A7E /* AAPLZoomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D71DD17119E2A6C500B86A7E /* AAPLZoomImageView.swift */; };
@@ -27,6 +28,7 @@
 		6FAD1D2C19369FBE0082987A /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6FE46E53191C4EE3004BCB45 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6FE46E58191C4F7A004BCB45 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		D70A89751D830B9E00405E73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 		D71DD16B19E1A57900B86A7E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D71DD16D19E1A6FB00B86A7E /* AAPLCapturePreviewView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAPLCapturePreviewView.swift; sourceTree = "<group>"; };
 		D71DD16F19E1AD9100B86A7E /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 			children = (
 				6F72DAB01907102300047A88 /* BracketStripes-Info.plist */,
 				6FE46E4F191C4CC8004BCB45 /* en.lproj */,
+				D70A89741D830B9E00405E73 /* Launch Screen.storyboard */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -162,8 +165,13 @@
 			attributes = {
 				CLASSPREFIX = BS;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0700;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Apple, Inc.";
+				TargetAttributes = {
+					6F72DAAB1907102300047A88 = {
+						LastSwiftMigration = 0800;
+					};
+				};
 			};
 			buildConfigurationList = 6F72DAA71907102300047A88 /* Build configuration list for PBXProject "BracketStripes" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -190,6 +198,7 @@
 			files = (
 				6F72DAB31907102300047A88 /* Localizable.strings in Resources */,
 				6F72DABD1907102300047A88 /* Images.xcassets in Resources */,
+				D70A89761D830B9E00405E73 /* Launch Screen.storyboard in Resources */,
 				6FE46E52191C4EDB004BCB45 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -231,6 +240,14 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
+		D70A89741D830B9E00405E73 /* Launch Screen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D70A89751D830B9E00405E73 /* Base */,
+			);
+			name = "Launch Screen.storyboard";
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -249,14 +266,19 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -290,13 +312,18 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
@@ -305,6 +332,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				SDKROOT = iphoneos.internal;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -318,6 +346,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
 					"\"$(SDK_DIR)/System/Library/PrivateFrameworks/\"",
@@ -333,6 +362,7 @@
 				PRODUCT_NAME = BracketStripes;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 			};
@@ -347,6 +377,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BracketStripes/BracketStripes-Prefix.pch";
@@ -357,6 +388,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.example.apple-samplecode.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = BracketStripes;
 				SDKROOT = iphoneos;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = 1;
 				VALIDATE_PRODUCT = NO;
 			};

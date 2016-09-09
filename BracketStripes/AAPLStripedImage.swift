@@ -25,10 +25,10 @@ class StripedImage : NSObject {
     
     
     // Size of the rendered striped image
-    private var imageSize: CGSize = CGSizeZero
+    private var imageSize: CGSize = CGSize()
     
     // Size of a stripe
-    private var stripeSize: CGSize = CGSizeZero
+    private var stripeSize: CGSize = CGSize()
     
     // Number of stripes before they repeat in the rendered image
     private var stride: Int = 0
@@ -37,10 +37,10 @@ class StripedImage : NSObject {
     private var stripeIndex: Int = 0
     
     // Bitmap context we render into
-    private var renderContext: CGContextRef?
+    private var renderContext: CGContext?
     
     
-    private func prepareImageOfSize(size: CGSize) {
+    private func prepareImageOfSize(_ size: CGSize) {
         let bitsPerComponent: size_t = 8
         let width = size_t(size.width)
         let paddedWidth = (width + 15) & ~15
@@ -49,13 +49,13 @@ class StripedImage : NSObject {
         
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         
-        renderContext = CGBitmapContextCreate(nil, Int(size.width), Int(size.height), bitsPerComponent, bytesPerRow, colorSpace, CGImageAlphaInfo.PremultipliedFirst.rawValue)
+        renderContext = CGContext(data: nil, width: Int(size.width), height: Int(size.height), bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGImageAlphaInfo.premultipliedFirst.rawValue)
         
     }
     
     
-    private func createImageFromSampleBuffer(sampleBuffer: CMSampleBufferRef) -> CGImageRef? {
-        var image: CGImageRef? = nil
+    private func createImageFromSampleBuffer(_ sampleBuffer: CMSampleBuffer) -> CGImage? {
+        var image: CGImage? = nil
         
         let formatDescription = CMSampleBufferGetFormatDescription(sampleBuffer)
         let subType = CMFormatDescriptionGetMediaSubType(formatDescription!)
@@ -69,7 +69,7 @@ class StripedImage : NSObject {
             // Sample buffer is a JPEG compressed image
             var lengthAtOffset: size_t = 0
             var length: size_t = 0
-            var jpegBytes: UnsafeMutablePointer<Int8> = nil
+            var jpegBytes: UnsafeMutablePointer<Int8>? = nil
             
             
             if CMBlockBufferGetDataPointer(blockBuffer!, 0, &lengthAtOffset, &length, &jpegBytes) == OSStatus(kCMBlockBufferNoErr) &&
@@ -94,7 +94,7 @@ class StripedImage : NSObject {
             
             let colorSpace = CGColorSpaceCreateDeviceRGB()
             
-            CVPixelBufferLockBaseAddress(imageBuffer!, 0)
+            CVPixelBufferLockBaseAddress(imageBuffer!, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
             
             let baseAddress = CVPixelBufferGetBaseAddressOfPlane(imageBuffer!, 0)
             
@@ -103,10 +103,10 @@ class StripedImage : NSObject {
             let width = CVPixelBufferGetWidth(imageBuffer!)
             let height = CVPixelBufferGetHeight(imageBuffer!)
             
-            let bitmapContext = CGBitmapContextCreate(baseAddress, width, height, bitsPerComponent, bytesPerRow, colorSpace, CGBitmapInfo.ByteOrder32Little.rawValue | CGImageAlphaInfo.NoneSkipFirst.rawValue)
-            image = CGBitmapContextCreateImage(bitmapContext)
+            let bitmapContext = CGContext(data: baseAddress, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue)
+            image = bitmapContext!.makeImage()
             
-            CVPixelBufferUnlockBaseAddress(imageBuffer!, 0)
+            CVPixelBufferUnlockBaseAddress(imageBuffer!, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
             
         }
         
@@ -121,9 +121,9 @@ class StripedImage : NSObject {
         self.imageSize = size
         self.stride = stride
         
-        self.stripeSize = CGSizeMake(
-            stripWidth,
-            size.height
+        self.stripeSize = CGSize(
+            width: stripWidth,
+            height: size.height
         )
         
         self.prepareImageOfSize(size)
@@ -131,11 +131,11 @@ class StripedImage : NSObject {
     
     
     // The final rendered strip
-    func imageWithOrientation(orientation: UIImageOrientation) -> UIImage? {
-        let scale = UIScreen.mainScreen().scale
+    func imageWithOrientation(_ orientation: UIImageOrientation) -> UIImage? {
+        let scale = UIScreen.main.scale
         
-        let cgImage = CGBitmapContextCreateImage(renderContext)
-        let image = UIImage(CGImage: cgImage!, scale: scale, orientation: orientation)
+        guard let cgImage = renderContext?.makeImage() else {return nil}
+        let image = UIImage(cgImage: cgImage, scale: scale, orientation: orientation)
         
         return image
     }
@@ -143,20 +143,27 @@ class StripedImage : NSObject {
     
     // Add an image to the strip
     // sampleBuffer must be a JPEG or BGRA image
-    func addSampleBuffer(sampleBuffer: CMSampleBufferRef) {
-        let renderStartTime = NSDate()
+    func addSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
+        guard let renderContext = renderContext else {
+            print("renderContext is not ready yet")
+            return
+        }
+        let renderStartTime = Date()
         
-        let image = self.createImageFromSampleBuffer(sampleBuffer)
+        guard let image = self.createImageFromSampleBuffer(sampleBuffer) else {
+            print("failed to create image")
+            return
+        }
         
-        let imageRect = CGRectMake(
-            0, 0,
-            CGFloat(CGImageGetWidth(image)), CGFloat(CGImageGetHeight(image))
+        let imageRect = CGRect(
+            x: 0, y: 0,
+            width: CGFloat(image.width), height: CGFloat(image.height)
         )
         
         var maskRects = [CGRect]()
-        var maskRect = CGRectMake(
-            stripeSize.width * CGFloat(stripeIndex), 0,
-            stripeSize.width, stripeSize.height
+        var maskRect = CGRect(
+            x: stripeSize.width * CGFloat(stripeIndex), y: 0,
+            width: stripeSize.width, height: stripeSize.height
         )
         
         // Scan the input sample buffer across the rendered image until we can't squeeze in any more...
@@ -169,18 +176,17 @@ class StripedImage : NSObject {
         }
         
         // Convert maskRects NSMutableArray to something Core Graphics can use
-        let maskCount: Int = maskRects.count
         
         // Perform the render
-        CGContextSaveGState(renderContext)
+        renderContext.saveGState()
         
-        CGContextClipToRects(renderContext, maskRects, maskCount)
-        CGContextDrawImage(renderContext, imageRect, image)
+        renderContext.clip(to: maskRects)
+        renderContext.draw(image, in: imageRect)
         
-        CGContextRestoreGState(renderContext)
+        renderContext.restoreGState()
         
-        let renderDuration = NSDate().timeIntervalSinceDate(renderStartTime)
-        NSLog("Render time for contributor %d: %.3f msec", stripeIndex, renderDuration * 1e3)
+        let renderDuration = Date().timeIntervalSince(renderStartTime)
+        NSLog(String(format: "Render time for contributor %d: %.3f msec", stripeIndex, renderDuration * 1e3))
         
         // Move to the next stripe, allowing wrapping
         stripeIndex = (stripeIndex + 1) % stride

@@ -30,7 +30,7 @@ class CapturePreviewView : UIView {
     private var captureOutput: AVCaptureOutput?
     
     
-    func configureCaptureSession(captureSession: AVCaptureSession, captureOutput: AVCaptureOutput) {
+    func configureCaptureSession(_ captureSession: AVCaptureSession, captureOutput: AVCaptureOutput) {
         if previewLayer != nil {
             previewLayer!.removeFromSuperlayer()
             previewLayer = nil
@@ -44,7 +44,7 @@ class CapturePreviewView : UIView {
         
         // Visually animate still image capture
         self.captureOutput = captureOutput
-        self.captureOutput!.addObserver(self, forKeyPath: kCapturingStillImageKeypath, options: .New, context: nil)
+        self.captureOutput!.addObserver(self, forKeyPath: kCapturingStillImageKeypath, options: .new, context: nil)
     }
     
     
@@ -52,36 +52,36 @@ class CapturePreviewView : UIView {
         self.captureOutput!.removeObserver(self, forKeyPath: kCapturingStillImageKeypath)
     }
     
-    override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
         // Still image capture state
-        if object === self.captureOutput &&
+        if object as? AVCaptureOutput === self.captureOutput &&
             keyPath == kCapturingStillImageKeypath {
                 
-                let value = change![NSKeyValueChangeNewKey]! as! Bool
+                let value = change![.newKey]! as! Bool
                 self.animateVisualShutter(value)
                 return
         }
         
         // Unhandled, pass up the chain
-        super.observeValueForKeyPath(keyPath, ofObject: object, change: change, context: context)
+        super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
     }
     
     
-    private func animateVisualShutter(start: Bool) {
+    private func animateVisualShutter(_ start: Bool) {
         if start {
             flashView?.removeFromSuperview()
             
             flashView = UIView(frame: self.bounds)
-            flashView!.backgroundColor = UIColor.whiteColor()
+            flashView!.backgroundColor = UIColor.white
             flashView!.alpha = 0.0
             self.addSubview(flashView!)
             
-            UIView.animateWithDuration(0.1) {
+            UIView.animate(withDuration: 0.1) {
                 self.flashView!.alpha = 1.0
             }
         } else {
             
-            UIView.animateWithDuration(0.1, animations: {
+            UIView.animate(withDuration: 0.1, animations: {
                 self.flashView!.alpha = 0.0
                 }) {finished in
                     self.flashView!.removeFromSuperview()

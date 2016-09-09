@@ -23,7 +23,7 @@ import CoreMedia
 
 // Completion handler prototypes
 typealias Completion = (Bool)->Void
-typealias CompletionWithError = (Bool, NSError?)->Void
+typealias CompletionWithError = (Bool, Error?)->Void
 typealias CompletionWithImage = (UIImage?)->Void
 
 
@@ -43,7 +43,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     
     // Brackets
     private var maxBracketCount: Int = 0
-    private var bracketSettings: NSArray?
+    private var bracketSettings: [AVCaptureBracketedStillImageSettings]?
     
     // UI
     @IBOutlet private var _cameraPreviewView: CapturePreviewView!
@@ -57,19 +57,19 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     // Convenience for enable/disable UI controls
     private var userInterfaceEnabled: Bool {
         set {
-            _cameraShutterButton?.enabled = newValue
-            _bracketModeControl?.enabled = newValue
+            _cameraShutterButton?.isEnabled = newValue
+            _bracketModeControl?.isEnabled = newValue
         }
         
         
         get {
-            return _cameraShutterButton.enabled
+            return _cameraShutterButton.isEnabled
             
         }
     }
     
     
-    private func cameraDeviceForPosition(position: AVCaptureDevicePosition) -> AVCaptureDevice? {
+    private func cameraDeviceForPosition(_ position: AVCaptureDevicePosition) -> AVCaptureDevice? {
         for device in AVCaptureDevice.devices() as! [AVCaptureDevice] {
             if device.position == position {
                 return device
@@ -80,24 +80,25 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     }
     
     
-    private func showErrorMessage(message: String, title: String) {
+    private func showErrorMessage(_ message: String, title: String) {
         let alert = UIAlertView()
         alert.title = title
         alert.message = message
         
-        alert.addButtonWithTitle(NSLocalizedString("title-ok", comment: "OK Button Title"))
+        alert.addButton(withTitle: NSLocalizedString("title-ok", comment: "OK Button Title"))
         alert.show()
     }
     
     
-    private func startCameraWithCompletionHandler(completion: CompletionWithError) {
+    private func startCameraWithCompletionHandler(_ completion: @escaping CompletionWithError) {
         // Capture session
-        captureSession = AVCaptureSession()
+        let captureSession = AVCaptureSession()
+        self.captureSession = captureSession
         
-        captureSession!.beginConfiguration()
+        captureSession.beginConfiguration()
         
         // Obtain back facing camera
-        captureDevice = self.cameraDeviceForPosition(.Back)
+        captureDevice = self.cameraDeviceForPosition(.back)
         if captureDevice == nil {
             let message = NSLocalizedString("message-back-camera-not-found", comment: "Error message back camera - not found")
             let title = NSLocalizedString("title-back-camera-not-found", comment: "Error title back camera - not found")
@@ -105,26 +106,22 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             return
         }
         
-        var error: NSError? = nil
-        let deviceInput: AVCaptureDeviceInput!
+        let deviceInput: AVCaptureDeviceInput
         do {
             deviceInput = try AVCaptureDeviceInput(device: captureDevice)
-        } catch let error1 as NSError {
-            error = error1
-            deviceInput = nil
-        }
-        if error != nil {
-            NSLog("This error should be handled appropriately in your app -- obtain device input: %@", error!)
+        } catch let error as NSError {
+            NSLog("This error should be handled appropriately in your app -- obtain device input: \(error)")
             let message = NSLocalizedString("message-back-camera-open-failed", comment: "Error message back camera - can't open.")
             let title = NSLocalizedString("title-back-camera-open-failed", comment: "Error title for back camera - can't open.")
             self.showErrorMessage(message, title: title)
             return
         }
-        captureSession?.addInput(deviceInput)
+        captureSession.addInput(deviceInput)
         
         // Still image output
-        stillImageOutput = AVCaptureStillImageOutput()
-        stillImageOutput!.outputSettings = [
+        let stillImageOutput = AVCaptureStillImageOutput()
+        self.stillImageOutput = stillImageOutput
+        stillImageOutput.outputSettings = [
             // JPEG output
             AVVideoCodecKey: AVVideoCodecJPEG
             /*
@@ -138,31 +135,31 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             *
             */
         ]
-        captureSession!.addOutput(stillImageOutput)
+        captureSession.addOutput(stillImageOutput)
         
         // Capture preview
-        _cameraPreviewView.configureCaptureSession(captureSession!, captureOutput: stillImageOutput!)
+        _cameraPreviewView.configureCaptureSession(captureSession, captureOutput: stillImageOutput)
         
         // Configure for high resolution still image photography
-        captureSession!.sessionPreset = AVCaptureSessionPresetPhoto
+        captureSession.sessionPreset = AVCaptureSessionPresetPhoto
         
         // Track the device's active format (we don't change this later)
         captureDeviceFormat = captureDevice!.activeFormat
         
-        captureSession!.commitConfiguration()
+        captureSession.commitConfiguration()
         
         // Start the AV session
-        captureSession!.startRunning()
+        captureSession.startRunning()
         
         // We make sure not to exceed the maximum number of supported brackets
-        maxBracketCount = stillImageOutput!.maxBracketedCaptureStillImageCount
+        maxBracketCount = stillImageOutput.maxBracketedCaptureStillImageCount
         
         // Construct capture bracket settings and warmup
         self.prepareBracketsWithCompletionHandler(completion)
     }
     
     
-    private func prepareBracketsWithCompletionHandler(completion: CompletionWithError) {
+    private func prepareBracketsWithCompletionHandler(_ completion: @escaping CompletionWithError) {
         // Construct the list of brackets
         switch _bracketModeControl.selectedSegmentIndex {
         case 0:
@@ -178,13 +175,13 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         
         // Prime striped image buffer
         let dimensions = CMVideoFormatDescriptionGetDimensions(captureDevice!.activeFormat.formatDescription)
-        imageStripes = StripedImage(forSize: CGSizeMake(CGFloat(dimensions.width), CGFloat(dimensions.height)), stripWidth: CGFloat(dimensions.width)/12.0, stride: bracketSettings!.count)
+        imageStripes = StripedImage(forSize: CGSize(width: CGFloat(dimensions.width), height: CGFloat(dimensions.height)), stripWidth: CGFloat(dimensions.width)/12.0, stride: bracketSettings!.count)
         
         // Warm up bracketed capture
         NSLog("Warming brackets: %@", bracketSettings!)
-        let connection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
-        stillImageOutput?.prepareToCaptureStillImageBracketFromConnection(connection,
-            withSettingsArray: bracketSettings as! [AnyObject]) {
+        let connection = stillImageOutput!.connection(withMediaType: AVMediaTypeVideo)
+        stillImageOutput?.prepareToCaptureStillImageBracket(from: connection,
+            withSettingsArray: bracketSettings) {
                 prepared, error in
                 
                 completion(prepared, error)
@@ -192,8 +189,8 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     }
     
     
-    private func exposureBrackets() -> [AVCaptureAutoExposureBracketedStillImageSettings] {
-        var brackets = [AVCaptureAutoExposureBracketedStillImageSettings]()
+    private func exposureBrackets() -> [AVCaptureBracketedStillImageSettings] {
+        var brackets = [AVCaptureBracketedStillImageSettings]()
         brackets.reserveCapacity(maxBracketCount)
         
         // Fixed bracket settings
@@ -206,16 +203,16 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             
             let biasValue = biasValues[index]
             
-            let settings = AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettingsWithExposureTargetBias(biasValue)
-            brackets.append(settings)
+            let settings = AVCaptureAutoExposureBracketedStillImageSettings.autoExposureSettings(withExposureTargetBias: biasValue)
+            brackets.append(settings!)
         }
         
         return brackets
     }
     
     
-    private func durationISOBrackets() -> [AVCaptureManualExposureBracketedStillImageSettings] {
-        var brackets = [AVCaptureManualExposureBracketedStillImageSettings]()
+    private func durationISOBrackets() -> [AVCaptureBracketedStillImageSettings] {
+        var brackets: [AVCaptureBracketedStillImageSettings] = []
         brackets.reserveCapacity(maxBracketCount)
         
         // ISO and Duration are hardware dependent
@@ -248,15 +245,15 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             let duration = CMTimeMakeWithSeconds(durationSeconds, 1000)
             
             // Create bracket settings
-            let settings = AVCaptureManualExposureBracketedStillImageSettings.manualExposureSettingsWithExposureDuration(duration, ISO: ISO)
-            brackets.append(settings)
+            let settings = AVCaptureManualExposureBracketedStillImageSettings.manualExposureSettings(withExposureDuration: duration, iso: ISO)
+            brackets.append(settings!)
         }
         
         return brackets
     }
     
     
-    private func performBrackedCaptureWithCompletionHandler(completion: CompletionWithImage) {
+    private func performBrackedCaptureWithCompletionHandler(_ completion: @escaping CompletionWithImage) {
         // Number of brackets to capture
         var todo = bracketSettings!.count
         
@@ -264,21 +261,31 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         var failed = 0
         
         NSLog("Performing bracketed capture: %@", bracketSettings!)
-        let connection = stillImageOutput!.connectionWithMediaType(AVMediaTypeVideo)
-        stillImageOutput!.captureStillImageBracketAsynchronouslyFromConnection(connection, withSettingsArray: bracketSettings! as [AnyObject]) {
+        guard
+            let stillImageOutput = stillImageOutput,
+            let connection = stillImageOutput.connection(withMediaType: AVMediaTypeVideo)
+            else {
+            print("stillImageOutput is not ready yet")
+            return
+        }
+        stillImageOutput.captureStillImageBracketAsynchronously(from: connection, withSettingsArray: bracketSettings!) {
             sampleBuffer, stillImageSettings, error in
             todo -= 1
-            
-            if error == nil {
-                NSLog("Bracket %@", stillImageSettings)
+
+            if let error = error {
+                NSLog("This error should be handled appropriately in your app -- Bracket \(stillImageSettings) ERROR: \(error)")
+                
+                failed += 1
+            } else {
+                NSLog("Bracket \(stillImageSettings)")
                 
                 // Process this sample buffer while we wait for the next bracketed image to be captured.
                 // You would insert your own HDR algorithm here.
+                guard let sampleBuffer = sampleBuffer else {
+                    print("something odd in sampleBuffer")
+                    return
+                }
                 self.imageStripes!.addSampleBuffer(sampleBuffer)
-            } else {
-                NSLog("This error should be handled appropriately in your app -- Bracket %@ ERROR: %@", stillImageSettings, error!)
-                
-                failed += 1
             }
             
             // Return the rendered image strip when the capture completes
@@ -288,11 +295,11 @@ class CameraViewController: UIViewController, ImageViewDelegate {
                 // This demo is restricted to portrait orientation for simplicity, where we hard-code the rendered striped image orientation.
                 let image: UIImage? =
                 failed == 0 ?
-                    self.imageStripes!.imageWithOrientation(.Right) :
+                    self.imageStripes!.imageWithOrientation(.right) :
                 nil
                 
                 // Don't assume we're on the main thread
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     completion(image)
                 }
             }
@@ -300,7 +307,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     }
     
     
-    @IBAction private func _bracketModeDidChange(sender: AnyObject) {
+    @IBAction private func _bracketModeDidChange(_ sender: AnyObject) {
         self.userInterfaceEnabled = false
         
         // Prepare for the new bracket settings
@@ -310,8 +317,8 @@ class CameraViewController: UIViewController, ImageViewDelegate {
         }
     }
     
-    @IBAction private func _cameraShutterDidPress(sender: AnyObject) {
-        if !captureSession!.running {
+    @IBAction private func _cameraShutterDidPress(_ sender: AnyObject) {
+        if !captureSession!.isRunning {
             return
         }
         
@@ -324,9 +331,9 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             controller.title = NSLocalizedString("title-bracket-stripes", comment: "Bracket Viewer Title")
             
             let navController = UINavigationController(rootViewController: controller)
-            navController.modalTransitionStyle = .CoverVertical
+            navController.modalTransitionStyle = .coverVertical
             
-            self.presentViewController(navController, animated: true, completion: nil)
+            self.present(navController, animated: true, completion: nil)
         }
     }
     
@@ -340,7 +347,7 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             if success {
                 self.userInterfaceEnabled = true
             } else {
-                NSLog("This error should be handled appropriately in your app -- start camera completion: %@", error!)
+                NSLog("This error should be handled appropriately in your app -- start camera completion: \(error!)")
             }
         }
     }
@@ -348,8 +355,8 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     
     //MARK: - ImageViewDelegate
     
-    func imageViewControllerDidFinish(controller: ImageViewController) {
-        controller.dismissViewControllerAnimated(true) {
+    func imageViewControllerDidFinish(_ controller: ImageViewController) {
+        controller.dismiss(animated: true) {
             self.userInterfaceEnabled = true
         }
     }

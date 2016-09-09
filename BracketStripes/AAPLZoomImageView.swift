@@ -37,13 +37,13 @@ class ZoomImageView: UIView, UIScrollViewDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor.whiteColor()
+        self.backgroundColor = UIColor.white
         
-        scrollView = UIScrollView(frame: CGRectZero)
+        scrollView = UIScrollView(frame: CGRect())
         scrollView!.delegate = self
         self.addSubview(scrollView!)
         
-        imageView = UIImageView(frame: CGRectZero)
+        imageView = UIImageView(frame: CGRect())
         scrollView!.addSubview(imageView!)
     }
     
@@ -63,7 +63,7 @@ class ZoomImageView: UIView, UIScrollViewDelegate {
     }
     
     
-    private func didSetImage(oldValue: UIImage?) {
+    private func didSetImage(_ oldValue: UIImage?) {
         imageView!.image = image
         
         if image != nil {
@@ -136,12 +136,12 @@ class ZoomImageView: UIView, UIScrollViewDelegate {
     
     //MARK: - UIScrollViewDelegate
     
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
     
     
-    func scrollViewDidZoom(scrollView: UIScrollView) {
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
         self.centerImageInScrollView()
     }
     

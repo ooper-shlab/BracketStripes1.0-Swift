@@ -16,6 +16,6 @@
  */
 
 // Clamp _value to range [_lo, _hi]
-func CLAMP<T: Comparable>(value: T, lo: T, hi: T) -> T {
+func CLAMP<T: Comparable>(_ value: T, lo: T, hi: T) -> T {
     return max(lo, min(hi, value))
 }
