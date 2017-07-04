@@ -6,21 +6,19 @@
 //
 //
 /*
- Copyright (C) 2014 Apple Inc. All Rights Reserved.
+ Copyright (C) 2016 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
 
  Abstract:
-
  Implements a composite image constructed of CMSampleBuffer stripes.
-
-*/
+ */
 
 import UIKit
 import CoreMedia
 import ImageIO
 import CoreGraphics
 
-@objc(AAPLStripedImage)
+@objc(StripedImage)
 class StripedImage : NSObject {
     
     
@@ -94,7 +92,7 @@ class StripedImage : NSObject {
             
             let colorSpace = CGColorSpaceCreateDeviceRGB()
             
-            CVPixelBufferLockBaseAddress(imageBuffer!, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
+            CVPixelBufferLockBaseAddress(imageBuffer!, .readOnly)
             
             let baseAddress = CVPixelBufferGetBaseAddressOfPlane(imageBuffer!, 0)
             
@@ -106,7 +104,7 @@ class StripedImage : NSObject {
             let bitmapContext = CGContext(data: baseAddress, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: CGBitmapInfo.byteOrder32Little.rawValue | CGImageAlphaInfo.noneSkipFirst.rawValue)
             image = bitmapContext!.makeImage()
             
-            CVPixelBufferUnlockBaseAddress(imageBuffer!, CVPixelBufferLockFlags(rawValue: CVOptionFlags(0)))
+            CVPixelBufferUnlockBaseAddress(imageBuffer!, .readOnly)
             
         }
         

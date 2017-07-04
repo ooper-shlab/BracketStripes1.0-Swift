@@ -6,13 +6,11 @@
 //
 //
 /*
- Copyright (C) 2014 Apple Inc. All Rights Reserved.
+ Copyright (C) 2016 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
 
  Abstract:
-
-         Camera preview view, with automatic "flash" animation
-
+ Camera preview view, with automatic "flash" animation
  */
 
 import UIKit
@@ -23,7 +21,7 @@ import AVFoundation
 let kCapturingStillImageKeypath = "capturingStillImage"
 
 
-@objc(AAPLCapturePreviewView)
+@objc(BracketStripesCapturePreviewView)
 class CapturePreviewView : UIView {
     private var flashView: UIView?
     private var previewLayer: AVCaptureVideoPreviewLayer?

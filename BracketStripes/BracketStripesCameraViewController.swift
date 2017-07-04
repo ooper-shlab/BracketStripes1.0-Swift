@@ -6,13 +6,11 @@
 //
 //
 /*
- Copyright (C) 2014 Apple Inc. All Rights Reserved.
+ Copyright (C) 2016 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
 
  Abstract:
-
-         Camera view controller
-
+ Camera view controller
  */
 
 
@@ -27,7 +25,7 @@ typealias CompletionWithError = (Bool, Error?)->Void
 typealias CompletionWithImage = (UIImage?)->Void
 
 
-@objc(AAPLCameraViewController)
+@objc(BracketStripesCameraViewController)
 class CameraViewController: UIViewController, ImageViewDelegate {
     
     required init?(coder aDecoder: NSCoder) {
@@ -340,14 +338,18 @@ class CameraViewController: UIViewController, ImageViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         self.userInterfaceEnabled = false
-        
-        self.startCameraWithCompletionHandler() {success, error in
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        self.startCameraWithCompletionHandler {success, error in
             if success {
                 self.userInterfaceEnabled = true
             } else {
-                NSLog("This error should be handled appropriately in your app -- start camera completion: \(error!)")
+                NSLog("This error should be handled appropriately in your app -- start camera completion: \(error?.localizedDescription ?? "nil")")
             }
         }
     }

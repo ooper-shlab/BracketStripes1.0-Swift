@@ -15,10 +15,10 @@ As each of the bracketed frames are captured in real-time, they are "striped" in
 
 ### Build
 
-iOS 8 SDK
+Xcode 8.0; iOS 8.0 SDK or later
 
 ### Runtime
 
-iOS 8 or later
+iOS 8.0 or later
 
-Copyright (C) 2014 Apple Inc. All rights reserved.
+Copyright (C) 2016 Apple Inc. All rights reserved.

@@ -6,18 +6,16 @@
 //
 //
 /*
- Copyright (C) 2014 Apple Inc. All Rights Reserved.
+ Copyright (C) 2016 Apple Inc. All Rights Reserved.
  See LICENSE.txt for this sample’s licensing information
 
  Abstract:
-
-         Zoomable image view
-
+ Zoomable image view
  */
 import UIKit
 
 
-@objc(AAPLZoomImageView)
+@objc(BracketStripesZoomImageView)
 class ZoomImageView: UIView, UIScrollViewDelegate {
     
     var image: UIImage? {
