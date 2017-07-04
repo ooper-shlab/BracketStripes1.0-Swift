@@ -1,4 +1,4 @@
-BracketStripes
+#BracketStripes
 
 Translated by OOPer in cooperation with shlab.jp, on 2015/2/7.
 
@@ -10,7 +10,6 @@ As this is a line-by-line translation from the original sample code, "redistribu
 Some faults caused by my translation may exist. Not all features tested.
 You should not contact to Apple or SHLab(jp) about any faults caused by my translation.
 
-===========================================================================
-BUILD REQUIREMENTS:
+##BUILD REQUIREMENTS:
 
-Xcode 8 GM seed
+Xcode 8.3.3

@@ -273,11 +273,11 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             todo -= 1
 
             if let error = error {
-                NSLog("This error should be handled appropriately in your app -- Bracket \(stillImageSettings) ERROR: \(error)")
+                NSLog("This error should be handled appropriately in your app -- Bracket \(stillImageSettings?.description ?? "settings-nil") ERROR: \(error)")
                 
                 failed += 1
             } else {
-                NSLog("Bracket \(stillImageSettings)")
+                NSLog("Bracket \(stillImageSettings?.description ?? "settings-nil")")
                 
                 // Process this sample buffer while we wait for the next bracketed image to be captured.
                 // You would insert your own HDR algorithm here.

@@ -36,7 +36,7 @@
 		D71DD17319E4098B00B86A7E /* AAPLStripedImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAPLStripedImage.swift; sourceTree = "<group>"; };
 		D71DD17519E41FCE00B86A7E /* AAPLImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAPLImageViewController.swift; sourceTree = "<group>"; };
 		D71DD17719E4240700B86A7E /* AAPLCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AAPLCameraViewController.swift; sourceTree = "<group>"; };
-		D71F144419E7D5AE0042844A /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		D71F144419E7D5AE0042844A /* README2.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README2.md; sourceTree = "<group>"; };
 		D7AE53711A85F77E0085AA3B /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,7 +54,7 @@
 		6F72DAA31907102300047A88 = {
 			isa = PBXGroup;
 			children = (
-				D71F144419E7D5AE0042844A /* readme.txt */,
+				D71F144419E7D5AE0042844A /* README2.md */,
 				D7AE53711A85F77E0085AA3B /* LICENSE.txt */,
 				6FAD1D2C19369FBE0082987A /* README.md */,
 				6F72DAAE1907102300047A88 /* BracketStripes */,
@@ -169,6 +169,7 @@
 				ORGANIZATIONNAME = "Apple, Inc.";
 				TargetAttributes = {
 					6F72DAAB1907102300047A88 = {
+						DevelopmentTeam = D9ACCH3T4Y;
 						LastSwiftMigration = 0800;
 					};
 				};
@@ -346,7 +347,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D9ACCH3T4Y;
 				FRAMEWORK_SEARCH_PATHS = "";
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphoneos*]" = (
 					"\"$(SDK_DIR)/System/Library/PrivateFrameworks/\"",
@@ -377,7 +378,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = D9ACCH3T4Y;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "BracketStripes/BracketStripes-Prefix.pch";
