@@ -353,6 +353,16 @@ class CameraViewController: UIViewController, ImageViewDelegate {
             }
         }
     }
+    //###
+    override func viewDidDisappear(_ animated: Bool) {
+        stopCamera()
+        super.viewDidDisappear(animated)
+    }
+    //###
+    private func stopCamera() {
+        _cameraPreviewView.unconfigureCaptureSession()
+        self.stillImageOutput = nil
+    }
     
     
     //MARK: - ImageViewDelegate

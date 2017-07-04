@@ -17,6 +17,7 @@
 		D7588B621F0BD33400250C17 /* BracketStripesImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7588B601F0BD33400250C17 /* BracketStripesImageViewController.swift */; };
 		D7588B651F0BD35A00250C17 /* StripedImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7588B631F0BD35A00250C17 /* StripedImage.swift */; };
 		D7588B661F0BD35A00250C17 /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7588B641F0BD35A00250C17 /* Functions.swift */; };
+		D7588B6D1F0BDEF100250C17 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D7588B6B1F0BDEF100250C17 /* Launch Screen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		D7588B641F0BD35A00250C17 /* Functions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
 		D7588B671F0BD38500250C17 /* README2.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README2.md; sourceTree = "<group>"; };
 		D7588B681F0BD38500250C17 /* LICENSE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		D7588B6C1F0BDEF100250C17 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "Base.lproj/Launch Screen.storyboard"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 		6FE46E4F191C4CC8004BCB45 /* en.lproj */ = {
 			isa = PBXGroup;
 			children = (
+				D7588B6B1F0BDEF100250C17 /* Launch Screen.storyboard */,
 				6FE46E50191C4EDB004BCB45 /* Main.storyboard */,
 				6F72DAB11907102300047A88 /* Localizable.strings */,
 			);
@@ -196,6 +199,7 @@
 			files = (
 				6F72DAB31907102300047A88 /* Localizable.strings in Resources */,
 				6F72DABD1907102300047A88 /* Images.xcassets in Resources */,
+				D7588B6D1F0BDEF100250C17 /* Launch Screen.storyboard in Resources */,
 				6FE46E52191C4EDB004BCB45 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -235,6 +239,14 @@
 				6FE46E58191C4F7A004BCB45 /* en */,
 			);
 			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		D7588B6B1F0BDEF100250C17 /* Launch Screen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D7588B6C1F0BDEF100250C17 /* Base */,
+			);
+			name = "Launch Screen.storyboard";
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -44,10 +44,14 @@ class CapturePreviewView : UIView {
         self.captureOutput = captureOutput
         self.captureOutput!.addObserver(self, forKeyPath: kCapturingStillImageKeypath, options: .new, context: nil)
     }
-    
+    //###
+    func unconfigureCaptureSession() {
+        self.captureOutput?.removeObserver(self, forKeyPath: kCapturingStillImageKeypath)
+        self.captureOutput = nil
+    }
     
     deinit {
-        self.captureOutput!.removeObserver(self, forKeyPath: kCapturingStillImageKeypath)
+        self.captureOutput?.removeObserver(self, forKeyPath: kCapturingStillImageKeypath)
     }
     
     override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
